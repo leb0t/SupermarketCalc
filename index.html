@@ -1,0 +1,138 @@
+<html>
+<head>
+    <title>Supermarket Profit Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .calculator h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .calculator input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: border-color 0.3s;
+        }
+        .calculator input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .calculator button {
+            background: transparent;
+            color: #007bff;
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            margin-top: 10px;
+        }
+        .calculator button:hover {
+            background: #007bff;
+            color: #fff;
+        }
+        .calculator .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+        .advanced-options {
+            display: none;
+        }
+        .footer {
+            margin-top: 20px;
+        }
+        .footer button {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .footer button:hover {
+            color: #555;
+        }
+        .description {
+            text-align: left;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Supermarket Profit Calculator</h1>
+        <div class="description">Cost Price:</div>
+        <input type="number" id="numberInput" placeholder="Enter the cost price">
+        <div class="advanced-options" id="advancedOptions">
+            <div class="description">Profit Margin (%):</div>
+            <input type="number" id="profitMarginInput" placeholder="Enter profit margin (%)" value="100">
+            <div class="description">Subtraction Amount:</div>
+            <input type="number" id="subtractionInput" placeholder="Enter subtraction amount" value="0.01">
+            <button onclick="resetFields()">Reset</button>
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div class="result" id="result"></div>
+        <div class="footer">
+            <button onclick="toggleAdvanced()">Advanced Mode</button>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            const costPrice = parseFloat(document.getElementById('numberInput').value);
+            const profitMargin = document.getElementById('advancedOptions').style.display === 'none' ? 100 : parseFloat(document.getElementById('profitMarginInput').value);
+            const subtractionAmount = document.getElementById('advancedOptions').style.display === 'none' ? 0.01 : parseFloat(document.getElementById('subtractionInput').value);
+            if (!isNaN(costPrice) && !isNaN(profitMargin) && !isNaN(subtractionAmount)) {
+                const result = (costPrice * (1 + profitMargin / 100)) - subtractionAmount;
+                document.getElementById('result').innerText = `Selling Price: $${result.toFixed(2)}`;
+            } else {
+                document.getElementById('result').innerText = 'Please enter valid numbers';
+            }
+        }
+
+        function toggleAdvanced() {
+            const advancedOptions = document.getElementById('advancedOptions');
+            if (advancedOptions.style.display === 'none') {
+                advancedOptions.style.display = 'block';
+            } else {
+                advancedOptions.style.display = 'none';
+            }
+        }
+
+        function resetFields() {
+            document.getElementById('numberInput').value = '';
+            document.getElementById('profitMarginInput').value = '100';
+            document.getElementById('subtractionInput').value = '0.01';
+            document.getElementById('result').innerText = '';
+        }
+    </script>
+</body>
+</html>
